@@ -1,0 +1,21 @@
+.question {
+  width: 60%;
+  height: 50%;
+  margin: 0 auto;
+
+  .question-text {
+    font-family: 'Comic Neue', cursive;
+    font-size: 3em;
+  }
+
+  .question-answer-container {
+    padding-top: 2%;
+  }
+
+  .question-answer {
+    font-family: 'Comic Neue', cursive;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 5px 0;
+  }
+}
