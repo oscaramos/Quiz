@@ -8,9 +8,17 @@ import Question from '../question/question.component';
 
 import './main-page.scss'
 
-
-
 class MainPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      started: false
+    };
+  }
+  startQuiz = () => {
+    this.setState({started: true});
+  }
+
   componentDidMount() {
     this.props.onRequestQuiz();
   }
@@ -20,7 +28,12 @@ class MainPage extends Component {
     const { currentQuestion } = this.props;
     return (
       <div className="main-page">
-          <Question {...results[currentQuestion]}/>
+        <div className="page-body">
+        {
+          this.state.started? <Question {...results[currentQuestion]}/>
+          : <div className="button-start" onClick={this.startQuiz}>Start Quiz</div>
+        }
+        </div>
       </div>
     );
   }

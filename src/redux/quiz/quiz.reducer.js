@@ -28,9 +28,9 @@ const quizReducer = (state = INITIAL_STATE, action) => {
     case quizConstants.REQUEST_QUIZ_PENDING:
       return { ...state, pending: true }
     case quizConstants.REQUEST_QUIZ_SUCCESS:
-      return { ...state, results: decodeQuestions(action.payload.results) }
+      return { ...state, pending: false, results: decodeQuestions(action.payload.results) }
     case quizConstants.REQUEST_QUIZ_FAILED:
-      return { ...state, error: action.payload }
+      return { ...state, pending: false, error: action.payload }
     default:
       return state;
   }

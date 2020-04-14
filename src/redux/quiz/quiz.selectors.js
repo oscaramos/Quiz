@@ -16,7 +16,15 @@ export const selectQuizCorrectAnswers = createSelector(
   [selectQuiz],
   state => state.correctAnswers
 )
+
 export const selectQuizTime = createSelector(
   [selectQuiz],
   state => state.time
 )
+
+export const selectPending = createSelector(
+  [selectQuiz],
+  state => state.pending
+)
+
+

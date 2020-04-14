@@ -1,10 +1,5 @@
 .question {
-  width: 60%;
-  height: 50%;
-  margin: 0 auto;
-
   .question-text {
-    font-family: 'Comic Neue', cursive;
     font-size: 3em;
   }
 
@@ -13,9 +8,15 @@
   }
 
   .question-answer {
-    font-family: 'Comic Neue', cursive;
+    display: inline-block;
+    margin-right:100%;
     font-size: 2em;
     cursor: pointer;
     padding: 5px 0;
+    transition: transform .2s;
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 }

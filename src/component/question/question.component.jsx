@@ -19,7 +19,7 @@ const Question = ({ question, correct_answer, incorrect_answers }) => {
       <div className="question-text">{question}</div>
       <div className="question-answer-container">
         {
-          answers.map((answer, idx) => (<div className="question-answer" key={idx}>{answer}</div>))
+          answers.map((answer, idx) => (<div className="question-answer" key={idx} >{answer}</div>))
         }
       </div>
     </div>
