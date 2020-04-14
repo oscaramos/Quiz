@@ -31,6 +31,10 @@ const quizReducer = (state = INITIAL_STATE, action) => {
       return { ...state, pending: false, results: decodeQuestions(action.payload.results) }
     case quizConstants.REQUEST_QUIZ_FAILED:
       return { ...state, pending: false, error: action.payload }
+    case quizConstants.ON_CORRECT_ANSWER:
+      return {...state,currentQuestion: state.currentQuestion+1, correct_answer: state.correct_answer+1}
+    case quizConstants.ON_WRONG_ANSWER:
+      return {...state,currentQuestion: state.currentQuestion+1}
     default:
       return state;
   }

@@ -7,3 +7,11 @@ export const requestQuiz = (dispatch) => {
     .then(data => dispatch({ type: quizConstants.REQUEST_QUIZ_SUCCESS, payload: data}))
     .catch(error => dispatch({ type: quizConstants.REQUEST_QUIZ_FAILED, payload: error}))
 }
+
+export const onCorrectAnswer = {
+  type: quizConstants.ON_CORRECT_ANSWER
+}
+
+export const onWrongAnswer = {
+  type: quizConstants.ON_WRONG_ANSWER
+}

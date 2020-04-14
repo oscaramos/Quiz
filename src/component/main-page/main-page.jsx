@@ -28,6 +28,10 @@ class MainPage extends Component {
     const { currentQuestion } = this.props;
     return (
       <div className="main-page">
+        <div className="page-header">
+
+        </div>
+
         <div className="page-body">
         {
           this.state.started? <Question {...results[currentQuestion]}/>

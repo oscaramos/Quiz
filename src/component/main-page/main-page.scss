@@ -6,12 +6,22 @@
   margin: 0;
   background-color: rgb(249, 219, 61);
 
+  .page-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 10%;
+    margin: 0 auto;
+    font-family: 'Comic Neue', cursive;
+  }
+
   .page-body {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 60%;
-    height: 80%;
+    height: 50%;
     margin: 0 auto;
     font-family: 'Comic Neue', cursive;
   }
