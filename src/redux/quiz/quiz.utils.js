@@ -8,3 +8,6 @@ export const decodeQuestions = results =>
     correct_answer: entities.decode(result.correct_answer),
     incorrect_answers: result.incorrect_answers.map(answer => entities.decode(answer))
   }))
+
+export const nextQuestion = state => state.currentQuestion + 1;
+export const incrementCorrectAnswers = state => state.correctAnswers + 1;

@@ -16,6 +16,7 @@ const handleAnswerClick = (answer, {correct_answer, onCorrectAnswer, onWrongAnsw
 const Question = (props) => {
   const { question, correct_answer, incorrect_answers } = props;
   const answers = shuffleAnswers(correct_answer, incorrect_answers);
+  console.log(`%c${correct_answer}`, "color: lime");
 
   return (
     <div className="question">

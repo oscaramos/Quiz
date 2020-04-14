@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { requestQuiz } from '../../redux/quiz/quiz.actions';
 import { createStructuredSelector } from "reselect";
 
-import { selectQuizCurrentQuestion, selectQuizResults } from '../../redux/quiz/quiz.selectors'
+import { selectQuizCurrentQuestion, selectQuizCorrectAnswers, selectQuizResults, selectQuizResultsLength } from '../../redux/quiz/quiz.selectors'
 import Question from '../question/question.component';
 
 import './main-page.scss'
@@ -29,7 +29,9 @@ class MainPage extends Component {
     return (
       <div className="main-page">
         <div className="page-header">
-
+        {
+          this.props.correctAnswers+'/'+this.props.resultsLength
+        }
         </div>
 
         <div className="page-body">
@@ -45,7 +47,9 @@ class MainPage extends Component {
 
 const mapStateToProps = createStructuredSelector({
   results: selectQuizResults,
-  currentQuestion: selectQuizCurrentQuestion
+  currentQuestion: selectQuizCurrentQuestion,
+  correctAnswers: selectQuizCorrectAnswers,
+  resultsLength: selectQuizResultsLength
 })
 
 const mapDispatchToProps = dispatch => ({

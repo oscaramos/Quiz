@@ -17,6 +17,11 @@ export const selectQuizCorrectAnswers = createSelector(
   state => state.correctAnswers
 )
 
+export const selectQuizResultsLength = createSelector(
+  [selectQuizResults],
+  results => results.length
+)
+
 export const selectQuizTime = createSelector(
   [selectQuiz],
   state => state.time
