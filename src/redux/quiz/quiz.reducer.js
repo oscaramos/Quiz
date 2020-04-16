@@ -21,6 +21,8 @@ const quizReducer = (state = INITIAL_STATE, action) => {
       return {...state,currentQuestion: nextQuestion(state), correctAnswers: incrementCorrectAnswers(state)}
     case quizConstants.ON_WRONG_ANSWER:
       return {...state,currentQuestion: nextQuestion(state)}
+    case quizConstants.RESET_QUIZ:
+      return INITIAL_STATE;
     default:
       return state;
   }

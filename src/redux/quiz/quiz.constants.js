@@ -5,4 +5,6 @@ export const quizConstants = {
 
   ON_CORRECT_ANSWER: "ON_CORRECT_ANSWER",
   ON_WRONG_ANSWER: "ON_WRONG_ANSWER",
+
+  RESET_QUIZ: "RESET_QUIZ"
 }

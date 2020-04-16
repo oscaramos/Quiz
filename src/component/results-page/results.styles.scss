@@ -1,0 +1,23 @@
+.results-page {
+  width: 30%;
+  height: 30%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  .result {
+    font-size: 1.8em;
+    margin: 10px 0;
+  }
+
+  .start-button {
+    color: black;
+    font-family: 'Comic Neue', cursive;
+    background-color: transparent;
+    display: inline-block;
+    font-size: 3em;
+    cursor: pointer;
+    border: solid black 1px;
+    padding: 10px;
+  }
+}

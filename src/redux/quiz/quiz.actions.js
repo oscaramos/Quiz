@@ -15,3 +15,7 @@ export const onCorrectAnswer = {
 export const onWrongAnswer = {
   type: quizConstants.ON_WRONG_ANSWER
 }
+
+export const resetQuiz = {
+  type: quizConstants.RESET_QUIZ
+}
