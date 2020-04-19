@@ -8,14 +8,21 @@ export const requestQuiz = (dispatch) => {
     .catch(error => dispatch({ type: quizConstants.REQUEST_QUIZ_FAILED, payload: error}))
 }
 
+export const resetQuiz = {
+  type: quizConstants.RESET_QUIZ
+}
+
+export const startTime = {
+  type: quizConstants.START_TIME
+}
+export const endTime = {
+  type: quizConstants.END_TIME
+}
+
 export const onCorrectAnswer = {
   type: quizConstants.ON_CORRECT_ANSWER
 }
 
 export const onWrongAnswer = {
   type: quizConstants.ON_WRONG_ANSWER
-}
-
-export const resetQuiz = {
-  type: quizConstants.RESET_QUIZ
 }

@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { requestQuiz, resetQuiz } from './redux/quiz/quiz.actions';
+import { endTime, requestQuiz, resetQuiz, startTime } from './redux/quiz/quiz.actions';
 
 import MainPage from "./component/questions-page/questions-page";
-import ResultsPages from "./component/results-page/results.component";
+import ResultsPages from "./component/results-page/results-page.component";
 
 import './App.css';
+import { selectPending } from "./redux/quiz/quiz.selectors";
+import { createStructuredSelector } from "reselect";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,17 +18,18 @@ class App extends React.Component {
   }
 
   startQuiz = () => {
+    const { onResetQuiz, onRequestQuiz, onStartTime } = this.props;
     this.setState({started: true});
+    onResetQuiz();
+    onRequestQuiz();
+    onStartTime();
   }
 
   endQuiz = () => {
-    this.setState({started: false});
-    this.props.onResetQuiz();
-    this.props.onRequestQuiz();
-  }
-
-  componentDidMount() {
-    this.props.onRequestQuiz();
+    if(this.props.pending === false){
+      this.setState({started: false});
+      this.props.onEndTime();
+    }
   }
 
   render() {
@@ -39,9 +42,15 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onRequestQuiz: () => dispatch(requestQuiz),
-  onResetQuiz: () => dispatch(resetQuiz)
+const mapStateToProps = createStructuredSelector({
+  pending: selectPending
 })
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  onResetQuiz: () => dispatch(resetQuiz),
+  onRequestQuiz: () => dispatch(requestQuiz),
+  onStartTime: () => dispatch(startTime),
+  onEndTime: () => dispatch(endTime),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

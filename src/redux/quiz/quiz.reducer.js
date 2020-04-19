@@ -23,6 +23,10 @@ const quizReducer = (state = INITIAL_STATE, action) => {
       return {...state,currentQuestion: nextQuestion(state)}
     case quizConstants.RESET_QUIZ:
       return INITIAL_STATE;
+    case quizConstants.START_TIME:
+      return {...state, time: performance.now()}
+    case quizConstants.END_TIME:
+      return {...state, time: performance.now()-state.time}
     default:
       return state;
   }
