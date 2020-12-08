@@ -1,14 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-
-import {
-  selectQuizCorrectAnswers,
-  selectQuizResultsLength,
-  selectQuizTime,
-} from "../../redux/quiz/quiz.selectors";
-
 import "./results-page.styles.scss";
+import { useQuiz } from "../../hooks/use-quiz";
 
 const millisToMinutesAndSeconds = (millis) => {
   const minutes = Math.floor(millis / 60000);
@@ -16,11 +8,15 @@ const millisToMinutesAndSeconds = (millis) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
-function ResultsPage({ onStartQuiz, correctAnswers, totalAnswers, time }) {
+export default function ResultsPage({ onStartQuiz }) {
+  const [state] = useQuiz();
+  const { correctAnswers, results, time } = state;
+  const resultsLength = results.length;
+
   return (
     <div className="results-page">
       <div className="result">
-        Correct answers: {`${correctAnswers}/${totalAnswers}`}
+        Correct answers: {`${correctAnswers}/${resultsLength}`}
       </div>
       <div className="result">Time: {`${millisToMinutesAndSeconds(time)}`}</div>
       <button className="start-button" onClick={onStartQuiz}>
@@ -29,11 +25,3 @@ function ResultsPage({ onStartQuiz, correctAnswers, totalAnswers, time }) {
     </div>
   );
 }
-
-const mapStateToProps = createStructuredSelector({
-  correctAnswers: selectQuizCorrectAnswers,
-  totalAnswers: selectQuizResultsLength,
-  time: selectQuizTime,
-});
-
-export default connect(mapStateToProps)(ResultsPage);

@@ -3,14 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { QuizProvider } from "./hooks/use-quiz";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <QuizProvider>
       <App />
-    </Provider>
+    </QuizProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import {
-  endTime,
-  requestQuiz,
-  resetQuiz,
-  startTime,
-} from "./redux/quiz/quiz.actions";
 
 import MainPage from "./component/questions-page/questions-page";
 import ResultsPages from "./component/results-page/results-page.component";
 
+import { useQuiz } from "./hooks/use-quiz";
 import "./App.css";
-import { selectPending } from "./redux/quiz/quiz.selectors";
-import { createStructuredSelector } from "reselect";
 
-function App({ onResetQuiz, onRequestQuiz, onStartTime, onEndTime, pending }) {
+export default function App() {
   const [started, setStarted] = useState(false);
+  const [
+    state,
+    { onResetQuiz, onRequestQuiz, onStartTime, onEndTime },
+  ] = useQuiz();
+  const { pending } = state;
 
   const startQuiz = () => {
     setStarted(true);
@@ -41,16 +38,3 @@ function App({ onResetQuiz, onRequestQuiz, onStartTime, onEndTime, pending }) {
     </div>
   );
 }
-
-const mapStateToProps = createStructuredSelector({
-  pending: selectPending,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onResetQuiz: () => dispatch(resetQuiz),
-  onRequestQuiz: () => dispatch(requestQuiz),
-  onStartTime: () => dispatch(startTime),
-  onEndTime: () => dispatch(endTime),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,25 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-
-import {
-  selectQuizCorrectAnswers,
-  selectQuizCurrentQuestion,
-  selectQuizResults,
-  selectQuizResultsLength,
-} from "../../redux/quiz/quiz.selectors";
-
 import Question from "../question/question.component";
-
+import { useQuiz } from "../../hooks/use-quiz";
 import "./questions-page.scss";
 
-function QuestionsPage({
-  correctAnswers,
-  currentQuestion,
-  onEndQuiz,
-  results,
-  resultsLength,
-}) {
+export default function QuestionsPage({ onEndQuiz }) {
+  const [state] = useQuiz();
+  const { results, currentQuestion, correctAnswers } = state;
+  const resultsLength = results.length;
+
   if (currentQuestion === resultsLength) onEndQuiz();
 
   return (
@@ -32,12 +20,3 @@ function QuestionsPage({
     </div>
   );
 }
-
-const mapStateToProps = createStructuredSelector({
-  results: selectQuizResults,
-  currentQuestion: selectQuizCurrentQuestion,
-  correctAnswers: selectQuizCorrectAnswers,
-  resultsLength: selectQuizResultsLength,
-});
-
-export default connect(mapStateToProps, null)(QuestionsPage);

@@ -1,7 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 
-import { onCorrectAnswer, onWrongAnswer } from "../../redux/quiz/quiz.actions";
+import { useQuiz } from "../../hooks/use-quiz";
 
 import "./question.styles.scss";
 
@@ -13,13 +12,13 @@ const shuffle = (a) => {
   return a;
 };
 
-function Question({
+export default function Question({
   question,
   correct_answer,
   incorrect_answers,
-  onCorrectAnswer,
-  onWrongAnswer,
 }) {
+  const [, { onCorrectAnswer, onWrongAnswer }] = useQuiz();
+
   // shuffle answers
   const answers = shuffle([correct_answer].concat(incorrect_answers));
 
@@ -45,10 +44,3 @@ function Question({
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => ({
-  onCorrectAnswer: () => dispatch(onCorrectAnswer),
-  onWrongAnswer: () => dispatch(onWrongAnswer),
-});
-
-export default connect(null, mapDispatchToProps)(Question);
