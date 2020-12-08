@@ -1,7 +1,7 @@
 import React from "react";
 
-import MainPage from "./component/questions-page/questions-page";
-import ResultsPages from "./component/results-page/results-page.component";
+import Questions from "./pages/questions/questions.component";
+import Results from "./pages/results/results.component";
 
 import { useQuiz } from "./hooks/use-quiz";
 import "./App.css";
@@ -9,5 +9,5 @@ import "./App.css";
 export default function App() {
   const [{ started }] = useQuiz();
 
-  return <div className="App">{started ? <MainPage /> : <ResultsPages />}</div>;
+  return <div className="App">{started ? <Questions /> : <Results />}</div>;
 }

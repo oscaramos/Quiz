@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Question from "../question/question.component";
+import Question from "./components/question/question.component";
 import { useQuiz } from "../../hooks/use-quiz";
-import "./questions-page.scss";
+import "./questions.styles.scss";
 
-export default function QuestionsPage() {
+export default function Questions() {
   const [
     { results, currentQuestion, correctAnswers, pending },
     { onEndQuiz },
@@ -13,7 +13,6 @@ export default function QuestionsPage() {
   useEffect(() => {
     if (currentQuestion === resultsLength && pending === false) {
       onEndQuiz();
-      // onEndQuiz();
     }
   }, [currentQuestion, resultsLength, onEndQuiz, pending]);
 

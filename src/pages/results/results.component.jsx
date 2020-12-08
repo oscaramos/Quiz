@@ -1,6 +1,6 @@
 import React from "react";
-import "./results-page.styles.scss";
 import { useQuiz } from "../../hooks/use-quiz";
+import "./results.styles.scss";
 
 const millisToMinutesAndSeconds = (millis) => {
   const minutes = Math.floor(millis / 60000);

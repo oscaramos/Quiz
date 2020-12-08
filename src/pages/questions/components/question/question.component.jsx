@@ -1,7 +1,5 @@
 import React from "react";
-
-import { useQuiz } from "../../hooks/use-quiz";
-
+import { useQuiz } from "../../../../hooks/use-quiz";
 import "./question.styles.scss";
 
 const shuffle = (a) => {
