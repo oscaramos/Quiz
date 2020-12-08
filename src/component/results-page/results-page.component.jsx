@@ -8,15 +8,13 @@ const millisToMinutesAndSeconds = (millis) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
-export default function ResultsPage({ onStartQuiz }) {
-  const [state] = useQuiz();
-  const { correctAnswers, results, time } = state;
-  const resultsLength = results.length;
+export default function ResultsPage() {
+  const [{ correctAnswers, results, time }, { onStartQuiz }] = useQuiz();
 
   return (
     <div className="results-page">
       <div className="result">
-        Correct answers: {`${correctAnswers}/${resultsLength}`}
+        Correct answers: {`${correctAnswers}/${results.length}`}
       </div>
       <div className="result">Time: {`${millisToMinutesAndSeconds(time)}`}</div>
       <button className="start-button" onClick={onStartQuiz}>

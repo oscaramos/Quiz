@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Question from "../question/question.component";
 import { useQuiz } from "../../hooks/use-quiz";
 import "./questions-page.scss";
 
-export default function QuestionsPage({ onEndQuiz }) {
-  const [state] = useQuiz();
-  const { results, currentQuestion, correctAnswers } = state;
+export default function QuestionsPage() {
+  const [
+    { results, currentQuestion, correctAnswers, pending },
+    { onEndQuiz },
+  ] = useQuiz();
   const resultsLength = results.length;
 
-  if (currentQuestion === resultsLength) onEndQuiz();
+  useEffect(() => {
+    if (currentQuestion === resultsLength && pending === false) {
+      onEndQuiz();
+      // onEndQuiz();
+    }
+  }, [currentQuestion, resultsLength, onEndQuiz, pending]);
 
   return (
     <div className="main-page">

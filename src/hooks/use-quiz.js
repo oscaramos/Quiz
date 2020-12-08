@@ -16,6 +16,8 @@ const quizActions = {
   RESET_QUIZ: "RESET_QUIZ",
   START_TIME: "START_TIME",
   END_TIME: "END_TIME",
+  START_QUIZ: "START_QUIZ",
+  END_QUIZ: "END_QUIZ",
 };
 
 const decodeQuestions = (results) =>
@@ -57,6 +59,10 @@ const quizReducer = (state, action) => {
       return { ...state, time: performance.now() };
     case quizActions.END_TIME:
       return { ...state, time: performance.now() - state.time };
+    case quizActions.START_QUIZ:
+      return { ...state, started: true };
+    case quizActions.END_QUIZ:
+      return { ...state, started: false };
     default:
       throw new Error(`Unhandled type: ${action.type}`);
   }
@@ -68,6 +74,7 @@ const INITIAL_STATE = {
   correctAnswers: 0,
   time: 0,
   results: [],
+  started: false,
 };
 
 export function QuizProvider({ children }) {
@@ -101,8 +108,16 @@ export function QuizProvider({ children }) {
     dispatch({ type: quizActions.START_TIME });
   };
 
-  const onEndTime = () => {
+  const onEndQuiz = () => {
     dispatch({ type: quizActions.END_TIME });
+    dispatch({ type: quizActions.END_QUIZ });
+  };
+
+  const onStartQuiz = () => {
+    onResetQuiz();
+    onRequestQuiz();
+    onStartTime();
+    dispatch({ type: quizActions.START_QUIZ });
   };
 
   return (
@@ -114,8 +129,9 @@ export function QuizProvider({ children }) {
           onWrongAnswer,
           onResetQuiz,
           onStartTime,
-          onEndTime,
+          onEndQuiz,
           onRequestQuiz,
+          onStartQuiz,
         },
       ]}
     >
