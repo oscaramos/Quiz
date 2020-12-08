@@ -8,5 +8,5 @@ export const quizConstants = {
 
   RESET_QUIZ: "RESET_QUIZ",
   START_TIME: "START_TIME",
-  END_TIME: "END_TIME"
-}
+  END_TIME: "END_TIME",
+};
