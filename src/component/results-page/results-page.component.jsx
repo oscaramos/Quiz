@@ -16,17 +16,19 @@ const millisToMinutesAndSeconds = (millis) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
-const ResultsPage = ({ onStartQuiz, correctAnswers, totalAnswers, time }) => (
-  <div className="results-page">
-    <div className="result">
-      Correct answers: {`${correctAnswers}/${totalAnswers}`}
+function ResultsPage({ onStartQuiz, correctAnswers, totalAnswers, time }) {
+  return (
+    <div className="results-page">
+      <div className="result">
+        Correct answers: {`${correctAnswers}/${totalAnswers}`}
+      </div>
+      <div className="result">Time: {`${millisToMinutesAndSeconds(time)}`}</div>
+      <button className="start-button" onClick={onStartQuiz}>
+        Start Quiz
+      </button>
     </div>
-    <div className="result">Time: {`${millisToMinutesAndSeconds(time)}`}</div>
-    <button className="start-button" onClick={onStartQuiz}>
-      Start Quiz
-    </button>
-  </div>
-);
+  );
+}
 
 const mapStateToProps = createStructuredSelector({
   correctAnswers: selectQuizCorrectAnswers,

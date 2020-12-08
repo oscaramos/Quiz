@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
   endTime,
@@ -14,40 +14,32 @@ import "./App.css";
 import { selectPending } from "./redux/quiz/quiz.selectors";
 import { createStructuredSelector } from "reselect";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      started: false,
-    };
-  }
+function App({ onResetQuiz, onRequestQuiz, onStartTime, onEndTime, pending }) {
+  const [started, setStarted] = useState(false);
 
-  startQuiz = () => {
-    const { onResetQuiz, onRequestQuiz, onStartTime } = this.props;
-    this.setState({ started: true });
+  const startQuiz = () => {
+    setStarted(true);
     onResetQuiz();
     onRequestQuiz();
     onStartTime();
   };
 
-  endQuiz = () => {
-    if (this.props.pending === false) {
-      this.setState({ started: false });
-      this.props.onEndTime();
+  const endQuiz = () => {
+    if (pending === false) {
+      setStarted(false);
+      onEndTime();
     }
   };
 
-  render() {
-    return (
-      <div className="App">
-        {this.state.started ? (
-          <MainPage onEndQuiz={this.endQuiz} />
-        ) : (
-          <ResultsPages onStartQuiz={this.startQuiz} />
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      {started ? (
+        <MainPage onEndQuiz={endQuiz} />
+      ) : (
+        <ResultsPages onStartQuiz={startQuiz} />
+      )}
+    </div>
+  );
 }
 
 const mapStateToProps = createStructuredSelector({

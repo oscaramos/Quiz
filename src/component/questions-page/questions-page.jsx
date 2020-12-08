@@ -13,15 +13,13 @@ import Question from "../question/question.component";
 
 import "./questions-page.scss";
 
-const QuestionsPage = (props) => {
-  const {
-    currentQuestion,
-    resultsLength,
-    onEndQuiz,
-    correctAnswers,
-    results,
-  } = props;
-
+function QuestionsPage({
+  correctAnswers,
+  currentQuestion,
+  onEndQuiz,
+  results,
+  resultsLength,
+}) {
   if (currentQuestion === resultsLength) onEndQuiz();
 
   return (
@@ -29,11 +27,11 @@ const QuestionsPage = (props) => {
       <div className="page-header">{correctAnswers + "/" + resultsLength}</div>
 
       <div className="page-body">
-        {<Question {...results[currentQuestion]} />}
+        <Question {...results[currentQuestion]} />
       </div>
     </div>
   );
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   results: selectQuizResults,

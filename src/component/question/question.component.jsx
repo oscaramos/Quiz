@@ -13,31 +13,30 @@ const shuffle = (a) => {
   return a;
 };
 
-const handleAnswerClick = (
-  answer,
-  { correct_answer, onCorrectAnswer, onWrongAnswer }
-) => () => {
-  if (answer === correct_answer) onCorrectAnswer();
-  else onWrongAnswer();
-};
-
-function Question({ question, correct_answer, incorrect_answers }) {
+function Question({
+  question,
+  correct_answer,
+  incorrect_answers,
+  onCorrectAnswer,
+  onWrongAnswer,
+}) {
   // shuffle answers
   const answers = shuffle([correct_answer].concat(incorrect_answers));
+
+  const handleClick = (answer) => {
+    if (answer === correct_answer) onCorrectAnswer();
+    else onWrongAnswer();
+  };
 
   return (
     <div className="question">
       <div className="question-text">{question}</div>
       <div className="question-answer-container">
-        {answers.map((answer, idx) => (
+        {answers.map((answer) => (
           <div
             className="question-answer"
-            key={idx}
-            onClick={handleAnswerClick(answer, {
-              question,
-              correct_answer,
-              incorrect_answers,
-            })}
+            key={answer}
+            onClick={() => handleClick(answer)}
           >
             {answer}
           </div>
