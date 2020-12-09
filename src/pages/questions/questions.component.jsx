@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Question from "./components/question/question.component";
 import { useQuiz } from "../../hooks/use-quiz";
+import { useStats } from "../../hooks/use-stats";
 import "./questions.styles.scss";
 
 const shuffle = (a) => {
@@ -32,12 +33,18 @@ export default function Questions() {
   const [{ questions }, { onEndQuiz }] = useQuiz();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  const { questionContent, allAnswers } = getCurrentQuestion(
+  const { questionContent, allAnswers, correctAnswer } = getCurrentQuestion(
     questions,
     currentQuestionIndex
   );
 
-  const handleClickAnswer = () => {
+  const [, { onCorrectAnswer }] = useStats();
+
+  const handleClickAnswer = (answer) => {
+    if (answer === correctAnswer) {
+      onCorrectAnswer();
+    }
+
     if (currentQuestionIndex === questions.length - 1) {
       onEndQuiz();
     } else {

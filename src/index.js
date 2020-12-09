@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { QuizProvider } from "./hooks/use-quiz";
+import { StatsProvider } from "./hooks/use-stats";
 
 ReactDOM.render(
   <React.StrictMode>
     <QuizProvider>
-      <App />
+      <StatsProvider>
+        <App />
+      </StatsProvider>
     </QuizProvider>
   </React.StrictMode>,
   document.getElementById("root")
