@@ -1,27 +1,21 @@
-import React, { createContext, useContext, useReducer } from "react";
+// thanks to https://kentcdodds.com/blog/how-to-use-react-context-effectively
+
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { AllHtmlEntities as Entities } from "html-entities";
 
 const entities = new Entities();
 
-const QuizContext = createContext(undefined);
+const QuizStateContext = createContext(undefined);
+const QuizActionsContext = createContext(undefined);
 
-const quizActions = {
-  REQUEST_QUIZ_PENDING: "REQUEST_QUIZ_PENDING",
-  REQUEST_QUIZ_SUCCESS: "REQUEST_QUIZ_SUCCESS",
-  REQUEST_QUIZ_FAILED: "REQUEST_QUIZ_FAILED",
-
-  CORRECT_ANSWER: "CORRECT_ANSWER",
-  WRONG_ANSWER: "WRONG_ANSWER",
-
-  RESET_QUIZ: "RESET_QUIZ",
-  START_TIME: "START_TIME",
-  END_TIME: "END_TIME",
-  START_QUIZ: "START_QUIZ",
-  END_QUIZ: "END_QUIZ",
-};
-
-const decodeQuestions = (results) =>
-  results.map((result) => ({
+const decodeQuestions = (questions) =>
+  questions.map((result) => ({
     ...result,
     question: entities.decode(result.question),
     correct_answer: entities.decode(result.correct_answer),
@@ -30,120 +24,138 @@ const decodeQuestions = (results) =>
     ),
   }));
 
-const quizReducer = (state, action) => {
-  switch (action.type) {
-    case quizActions.REQUEST_QUIZ_PENDING:
-      return { ...state, pending: true };
-    case quizActions.REQUEST_QUIZ_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        results: decodeQuestions(action.payload.results),
-      };
-    case quizActions.REQUEST_QUIZ_FAILED:
-      return { ...state, pending: false, error: action.payload };
-    case quizActions.CORRECT_ANSWER:
-      return {
-        ...state,
-        currentQuestion: state.currentQuestion + 1,
-        correctAnswers: state.correctAnswers + 1,
-      };
-    case quizActions.WRONG_ANSWER:
-      return {
-        ...state,
-        currentQuestion: state.currentQuestion + 1,
-      };
-    case quizActions.RESET_QUIZ:
-      return INITIAL_STATE;
-    case quizActions.START_TIME:
-      return { ...state, time: performance.now() };
-    case quizActions.END_TIME:
-      return { ...state, time: performance.now() - state.time };
-    case quizActions.START_QUIZ:
-      return { ...state, started: true };
-    case quizActions.END_QUIZ:
-      return { ...state, started: false };
-    default:
-      throw new Error(`Unhandled type: ${action.type}`);
-  }
+export const actionsType = {
+  resetQuiz: "RESET_QUIZ",
+  startQuiz: "START_QUIZ",
+  endQuiz: "END_QUIZ",
+
+  setPending: "SET_PENDING",
+  setQuestions: "SET_QUESTIONS",
 };
 
-const INITIAL_STATE = {
-  pending: true,
-  currentQuestion: 0,
-  correctAnswers: 0,
-  time: 0,
-  results: [],
-  started: false,
-};
+export function quizReducer(state, action) {
+  switch (action.type) {
+    case actionsType.resetQuiz: {
+      return {
+        pending: true,
+        questions: [],
+      };
+    }
+
+    case actionsType.startQuiz: {
+      return state;
+    }
+    case actionsType.endQuiz: {
+      return state;
+    }
+
+    case actionsType.setPending: {
+      return {
+        ...state,
+        pending: action.payload,
+      };
+    }
+    case actionsType.setQuestions: {
+      return {
+        ...state,
+        questions: action.payload,
+      };
+    }
+    default:
+      throw new Error(`Unknown action type: ${action.type}`);
+  }
+}
 
 export function QuizProvider({ children }) {
-  const [state, dispatch] = useReducer(quizReducer, INITIAL_STATE);
+  const [actionsHistory, setActionsHistory] = useState([]);
 
-  const onCorrectAnswer = () => {
-    dispatch({ type: quizActions.CORRECT_ANSWER });
-  };
+  const [{ pending, questions }, dispatch] = useReducer(
+    (state, action) => {
+      setActionsHistory((prev) => [...prev, action]);
+      return quizReducer(state, action);
+    },
+    {
+      pending: false,
+      questions: [],
+    }
+  );
 
-  const onWrongAnswer = () => {
-    dispatch({ type: quizActions.WRONG_ANSWER });
-  };
-
-  const onRequestQuiz = () => {
-    dispatch({ type: quizActions.REQUEST_QUIZ_PENDING });
-    fetch("https://opentdb.com/api.php?amount=10&type=multiple")
-      .then((res) => res.json())
-      .then((data) =>
-        dispatch({ type: quizActions.REQUEST_QUIZ_SUCCESS, payload: data })
-      )
-      .catch((error) =>
-        dispatch({ type: quizActions.REQUEST_QUIZ_FAILED, payload: error })
+  const onRequestQuiz = async () => {
+    dispatch({ type: actionsType.setPending, payload: true });
+    try {
+      const res = await fetch(
+        "https://opentdb.com/api.php?amount=10&type=multiple"
       );
+      const data = await res.json();
+      dispatch({
+        type: actionsType.setQuestions,
+        payload: decodeQuestions(data.results),
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      dispatch({ type: actionsType.setPending, payload: false });
+    }
   };
 
-  const onResetQuiz = () => {
-    dispatch({ type: quizActions.RESET_QUIZ });
-  };
-
-  const onStartTime = () => {
-    dispatch({ type: quizActions.START_TIME });
+  const onStartQuiz = async () => {
+    dispatch({ type: actionsType.resetQuiz });
+    dispatch({ type: actionsType.startQuiz });
+    onRequestQuiz();
   };
 
   const onEndQuiz = () => {
-    dispatch({ type: quizActions.END_TIME });
-    dispatch({ type: quizActions.END_QUIZ });
-  };
-
-  const onStartQuiz = () => {
-    onResetQuiz();
-    onRequestQuiz();
-    onStartTime();
-    dispatch({ type: quizActions.START_QUIZ });
+    dispatch({ type: actionsType.endQuiz });
   };
 
   return (
-    <QuizContext.Provider
-      value={[
-        state,
-        {
-          onCorrectAnswer,
-          onWrongAnswer,
-          onResetQuiz,
-          onStartTime,
-          onEndQuiz,
-          onRequestQuiz,
-          onStartQuiz,
-        },
-      ]}
-    >
-      {children}
-    </QuizContext.Provider>
+    <QuizStateContext.Provider value={{ pending, questions }}>
+      <QuizActionsContext.Provider
+        value={{ onStartQuiz, onEndQuiz, actionsHistory }}
+      >
+        {children}
+      </QuizActionsContext.Provider>
+    </QuizStateContext.Provider>
   );
 }
 
-export function useQuiz() {
-  const context = useContext(QuizContext);
+function useQuizState() {
+  const context = useContext(QuizStateContext);
   if (context === undefined) {
-    throw new Error("useQuiz must be within a QuizProvider");
+    throw new Error("useQuizState must be within a QuizProvider");
   }
   return context;
+}
+
+function useQuizActions(actionListener = {}) {
+  const context = useContext(QuizActionsContext);
+  if (context === undefined) {
+    throw new Error("useQuizActions must be within a QuizProvider");
+  }
+
+  const [cursor, setCursor] = useState(0);
+
+  useEffect(() => {
+    if (context.actionsHistory.length === cursor) return;
+
+    switch (context.actionsHistory[cursor].type) {
+      case actionsType.startQuiz:
+        if (actionListener.onStartQuiz) actionListener.onStartQuiz();
+        break;
+      case actionsType.endQuiz:
+        if (actionListener.onEndQuiz) actionListener.onEndQuiz();
+        break;
+      case actionsType.resetQuiz:
+        if (actionListener.onResetQuiz) actionListener.onResetQuiz();
+        break;
+      default:
+    }
+
+    setCursor((prev) => prev + 1);
+  }, [actionListener, context.actionsHistory, cursor]);
+  return context;
+}
+
+export function useQuiz(actionListener) {
+  return [useQuizState(), useQuizActions(actionListener)];
 }
