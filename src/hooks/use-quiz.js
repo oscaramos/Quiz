@@ -138,17 +138,29 @@ function useQuizActions(actionListener = {}) {
   useEffect(() => {
     if (context.actionsHistory.length === cursor) return;
 
-    switch (context.actionsHistory[cursor].type) {
-      case actionsType.startQuiz:
-        if (actionListener.onStartQuiz) actionListener.onStartQuiz();
-        break;
-      case actionsType.endQuiz:
-        if (actionListener.onEndQuiz) actionListener.onEndQuiz();
-        break;
-      case actionsType.resetQuiz:
-        if (actionListener.onResetQuiz) actionListener.onResetQuiz();
-        break;
-      default:
+    // previousAction avoid problem about an error that can repeats actions twice
+    const currentAction = context.actionsHistory[cursor];
+    const previousAction = context.actionsHistory[cursor - 1] ?? { type: "" };
+
+    if (currentAction.type !== previousAction.type) {
+      switch (currentAction.type) {
+        case actionsType.startQuiz:
+          if (actionListener.onStartQuiz) {
+            actionListener.onStartQuiz();
+          }
+          break;
+        case actionsType.endQuiz:
+          if (actionListener.onEndQuiz) {
+            actionListener.onEndQuiz();
+          }
+          break;
+        case actionsType.resetQuiz:
+          if (actionListener.onResetQuiz) {
+            actionListener.onResetQuiz();
+          }
+          break;
+        default:
+      }
     }
 
     setCursor((prev) => prev + 1);
