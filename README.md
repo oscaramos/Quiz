@@ -1,39 +1,27 @@
-# Quiz App
+# Quiz ✅/❎
 
-**Tier:** 1-Beginner
+Test your knowledge by answering these general knowledge questions
 
-Practice and test your knowledge by answering questions in a quiz application.
+# Motivation
 
-As a developer you can create a quiz application for testing coding skills of other developers. (HTML, CSS, JavaScript, Python, PHP, etc...)
+This idea came out from [App Ideas Collection](https://github.com/florinpop17/app-ideas)  
+See the project description [here](./PROJECT_IDEA.md)
 
-## User Stories
+# Screenshot
 
-- [x] User can start the quiz by pressing a `button`
-- [x] User can see a question with 4 possible answers
-- [x] After selecting an answer, display the next question to the User. Do this until the quiz is finished
-- [ ] At the end, the User can see the following statistics
-  - Time it took to finish the quiz
-  - How many correct answers did he get
-  - A message showing if he `passed` or `failed` the quiz
+<img src='./docs/Screenshot.png' alt='Question saying: What is the closest planet to our solar system's sun?. Answers are Earth, Mars, Jupiter(focused text) and Mercury' width='1000' />
 
-## Bonus features
+# Tools
+* [React](https://es.reactjs.org/) - Library for UI
+* [SASS](https://sass-lang.com/) - "CSS with superpowers"
+* [Open Trivia Database](https://opentdb.com/api_config.php) - API that provides the questions
+* [html-entities](https://www.npmjs.com/package/html-entities) - Decoding questions from API
 
-- [ ] User can share the result of a quiz on social media
-- [ ] Add multiple quizzes to the application. User can select which one to take
-- [ ] User can create an account and have all the scores saved in his dashboard. User can complete a quiz multiple times
+# Deployment
 
-## Useful links and resources
+This app is deployed on [Github Pages](https://oscaramos.github.io/Quiz/)
 
-- [Open Trivia Database](https://opentdb.com/api_config.php)
-
-## Example projects
-
-- [Quiz app built with React](http://tranquil-beyond-43849.herokuapp.com/) (wait for it to load as it is hosted on Heroku)
-- [Quiz app interface](https://codepen.io/FlorinPop17/full/qqYNgW)
-- [Quiz Progressive Web App built with React](https://github.com/SafdarJamal/quiz-app)
-
-To run this app
-
+# To run this app
 1. Clone this repo
-2. Run npm install
-3. Run npm start
+2. Run ```npm install```
+3. Run ```npm start```
