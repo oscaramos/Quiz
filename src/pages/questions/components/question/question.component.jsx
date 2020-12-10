@@ -4,11 +4,11 @@ import "./question.styles.scss";
 export default function Question({ text, answers, onClickAnswer }) {
   return (
     <div className="question">
-      <div className="question-text">{text}</div>
-      <div className="question-answer-container">
+      <div className="description">{text}</div>
+      <div className="answers-container">
         {answers.map((answer) => (
           <div
-            className="question-answer"
+            className="answer"
             key={answer}
             onClick={() => onClickAnswer(answer)}
           >

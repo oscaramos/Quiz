@@ -1,22 +1,28 @@
 .question {
-  .question-text {
-    font-size: 3em;
-  }
-
-  .question-answer-container {
-    padding-top: 2%;
-  }
-
-  .question-answer {
-    display: inline-block;
-    margin-right: 100%;
-    font-size: 2em;
-    cursor: pointer;
-    padding: 5px 0;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: scale(1.2);
+    .description {
+        font-size: 2em;
     }
-  }
+
+    .answers-container {
+        display: flex;
+        flex-direction: column;
+
+        margin-bottom: 4em;
+    }
+
+
+    .answer {
+        width: fit-content;
+        padding-top: 5px;
+
+        font-size: 1.5em;
+
+        transition: transform .2s;
+
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
 }

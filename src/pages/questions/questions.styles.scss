@@ -1,19 +1,11 @@
-.main-page {
-  .page-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    height: 10%;
-    margin: 0 auto;
-  }
+.question-page {
+    width: 75%;
 
-  .page-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    height: 50%;
-    margin: 0 auto;
-  }
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        height: 10%;
+    }
 }

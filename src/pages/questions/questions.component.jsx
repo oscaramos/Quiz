@@ -53,18 +53,16 @@ export default function Questions() {
   };
 
   return (
-    <div className="main-page">
-      <div className="page-header">
+    <div className="question-page">
+      <div className="header">
         {currentQuestionIndex + "/" + questions.length}
       </div>
 
-      <div className="page-body">
-        <Question
-          text={questionContent}
-          answers={allAnswers}
-          onClickAnswer={handleClickAnswer}
-        />
-      </div>
+      <Question
+        text={questionContent}
+        answers={allAnswers}
+        onClickAnswer={handleClickAnswer}
+      />
     </div>
   );
 }
