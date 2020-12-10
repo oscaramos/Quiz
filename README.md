@@ -9,7 +9,7 @@ See the project description [here](./PROJECT_IDEA.md)
 
 # Screenshot
 
-<img src='./docs/Screenshot.png' alt='Question saying: What is the closest planet to our solar system's sun?. Answers are Earth, Mars, Jupiter(focused text) and Mercury' width='1000' />
+<img src='./docs/Screenshot.png' alt='Question saying: What is the closest planet to our solar systems sun?. Answers are Earth, Mars, Jupiter(focused text) and Mercury' width='1000' />
 
 # Tools
 * [React](https://es.reactjs.org/) - Library for UI
