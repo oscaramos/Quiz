@@ -12,7 +12,7 @@ export function StatsProvider({ children }) {
       setTime(performance.now());
     },
     onEndQuiz: () => {
-      setTime(performance.now() - time);
+      setTime((startTime) => performance.now() - startTime);
     },
     onResetQuiz: () => {
       setTime(0);

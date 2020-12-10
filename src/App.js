@@ -14,13 +14,12 @@ export default function App() {
       setStarted(true);
     },
     onEndQuiz: () => {
-      console.log("ending");
       setStarted(false);
     },
   });
 
   if (pending) {
-    return "loading";
+    return <div className="App">loading</div>;
   }
 
   return <div className="App">{started ? <Questions /> : <Results />}</div>;
